@@ -159,6 +159,7 @@ public class TouchImageView extends ImageView {
 
     @Override
     public void setImageResource(int resId) {
+        imageRenderedAtLeastOnce = false;
     	super.setImageResource(resId);
     	savePreviousImageValues();
     	fitImageToView();
@@ -166,6 +167,7 @@ public class TouchImageView extends ImageView {
     
     @Override
     public void setImageBitmap(Bitmap bm) {
+        imageRenderedAtLeastOnce = false;
     	super.setImageBitmap(bm);
     	savePreviousImageValues();
     	fitImageToView();
@@ -173,6 +175,7 @@ public class TouchImageView extends ImageView {
     
     @Override
     public void setImageDrawable(Drawable drawable) {
+        imageRenderedAtLeastOnce = false;
     	super.setImageDrawable(drawable);
     	savePreviousImageValues();
     	fitImageToView();
@@ -180,6 +183,7 @@ public class TouchImageView extends ImageView {
     
     @Override
     public void setImageURI(Uri uri) {
+        imageRenderedAtLeastOnce = false;
     	super.setImageURI(uri);
     	savePreviousImageValues();
     	fitImageToView();
@@ -525,7 +529,7 @@ public class TouchImageView extends ImageView {
         	setMeasuredDimension(0, 0);
         	return;
         }
-        
+
         int drawableWidth = drawable.getIntrinsicWidth();
         int drawableHeight = drawable.getIntrinsicHeight();
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -534,12 +538,12 @@ public class TouchImageView extends ImageView {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         viewWidth = setViewSize(widthMode, widthSize, drawableWidth);
         viewHeight = setViewSize(heightMode, heightSize, drawableHeight);
-        
+
         //
         // Set view dimensions
         //
         setMeasuredDimension(viewWidth, viewHeight);
-        
+
         //
         // Fit content within view
         //
@@ -626,7 +630,7 @@ public class TouchImageView extends ImageView {
         	//
         	// Rescale Matrix after rotation
         	//
-        	m[Matrix.MSCALE_X] = matchViewWidth / drawableWidth * normalizedScale;
+        	m[Matrix.MSCALE_X] = matchViewWidth  / drawableWidth  * normalizedScale;
         	m[Matrix.MSCALE_Y] = matchViewHeight / drawableHeight * normalizedScale;
         	
         	//
@@ -634,7 +638,8 @@ public class TouchImageView extends ImageView {
         	//
             float transX = m[Matrix.MTRANS_X];
             float transY = m[Matrix.MTRANS_Y];
-            
+            Log.e("TRANSLATE X", "" + transX);
+            Log.e("TRANSLATE Y", "" + transY);
             //
             // Width
             //
